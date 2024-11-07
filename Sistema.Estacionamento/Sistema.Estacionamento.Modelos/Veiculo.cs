@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Alura.Estacionamento.Modelos
 {
-    public class Veiculo
+    public class Veiculo : IEnumerable<object[]>
     {
         //Campos    
         private string _placa;
@@ -93,6 +93,40 @@ namespace Alura.Estacionamento.Modelos
         public Veiculo(string proprietario)
         {
            Proprietario = proprietario;
+        }
+
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[]
+            {
+                new Veiculo
+                {
+                    Proprietario = "Otávio Fernando",
+                    Placa = "WAS-9999",
+                    Cor = "Cinza",
+                    Modelo = "Civic"
+                }
+            };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        internal void AlterarDados(Veiculo veiculoAtualizado)
+        {
+            this.Cor = veiculoAtualizado.Cor;
+            this.Modelo = veiculoAtualizado.Modelo;
+            this.Largura = veiculoAtualizado.Largura;
+            this.Proprietario = veiculoAtualizado.Proprietario;
+        }
+
+        public override string ToString()
+        {
+            return $"Ficha do Veículo:\n " +
+                $"Tipo do Veículo: {this.Tipo}\n" +
+                $"Proprietário: {this.Proprietario}\n" +
+                $"Modelo: {this.Modelo}\n" +
+                $"Cor: {this.Cor}\n" +
+                $"Placa: {this.Placa}\n";
         }
     }
 }
